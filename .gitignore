@@ -1,0 +1,21 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code / Positron editor settings
+.vscode/
+.positron/
+
+# Jupyter / notebook caches (if used)
+.ipynb_checkpoints/
+
+# OS noise
+Thumbs.db
+.DS_Store
+
+# Environment / secret files
+.env
+*.env
