@@ -7,6 +7,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.common.by import By
+import requests
+import os
+import pyperclip
 
 # folder for images
 SAVE_FOLDER = "images"
@@ -28,7 +31,7 @@ wait = WebDriverWait(driver, 15)
 # Wait for ANY articles to appear
 wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "article.w-full")))
 
-# Scroll down on page
+# Scroll down on page until it is fully loaded
 def scroll_to_load_all(driver, pause_time=2, max_scrolls=50):
     last_height = driver.execute_script("return document.body.scrollHeight")
     scroll_count = 0
@@ -152,14 +155,21 @@ while True:
 
 ## Go through all the Links and Download stuff from individual pages
 detailed_results = []
+index = 0
 
-for post in results:
+for post in results[156:]:
+    index + 1
+    print(index)
     post_id = post['id']
     url = post['permalink']
+
+    print(post_id)
+    pyperclip.copy(post_id)
+    
     print(url)
     driver.get(url)
 
-    time.sleep(3)
+    time.sleep(6)
 
     # get the comment by the realOrAIbot
     comment_divs = driver.find_elements(By.CSS_SELECTOR, "div[slot='comment']")
@@ -175,22 +185,10 @@ for post in results:
     # append the id and all comments to detailed_results
     detailed_results.append({
         "id": post_id,
-        "AI_score": comments_text[0],  # first comment
-        "comment_2": comments_text[1],
-        "comment_3": comments_text[2],
-        "comment_4": comments_text[3],
-        "comment_5": comments_text[4],
-        "comment_6": comments_text[5],
-        "comment_7": comments_text[6],
-        "comment_8": comments_text[7],
-        "comment_9": comments_text[8],
-        "comment_10": comments_text[9]
+        "AI_score": comments_text[0]
     })
 
     print(comments_text[0])
 
     time.sleep(3)
-
-    # Download Image / Video 
-    
 
